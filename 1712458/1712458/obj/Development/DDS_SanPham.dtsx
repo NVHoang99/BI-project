@@ -1,0 +1,1857 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/11/2021 11:05:50 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADMIN"
+  DTS:CreatorName="ADMIN\Admin"
+  DTS:DTSID="{9065C1DA-6B0B-4DA8-B9A3-C744F04AB490}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1066"
+  DTS:ObjectName="DDS_SanPham"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{1B0056AC-95F7-460C-8C59-B49154629EFA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DDS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8E487C37-D6DD-4C06-932A-0BC06710D513}"
+      DTS:ObjectName="LocalHost.DDS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.Metadata]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D05D8780-93B9-4DB9-8911-1EB3D239D112}"
+      DTS:ObjectName="LocalHost.Metadata">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=Metadata;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.NDS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{371D6B18-E72C-4F8C-8836-011DB072397A}"
+      DTS:ObjectName="LocalHost.NDS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=NDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{97D99396-39C5-41FE-9790-54A74D0D3E4B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CET_result">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{01CF0372-7ABF-4EA4-BF15-2F7BFA0A19B0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LSET_result">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\GET LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{48990a1a-b574-4dfe-8b91-b7bfa60dddbb}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="GET LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D05D8780-93B9-4DB9-8911-1EB3D239D112}"
+          SQLTask:SqlStatementSource="select LSET, CET from Data_Flow where name = 'DDS_SanPham'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LSET"
+            SQLTask:DtsVariableName="User::LSET_result" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="CET"
+            SQLTask:DtsVariableName="User::CET_result" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SanPham_NDS -&gt; SanPham_DDS"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{358940e1-1b43-42b3-9490-b49e3d434e66}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SanPham_NDS -&gt; SanPham_DDS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Inputs[Derived Column Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)("0")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)("0")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Inputs[Derived Column Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)("1")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)("1")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="insert new row with trangthai 1"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[SanPham]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[MaSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[MaSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[MaSP]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[TenSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[TenSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TenSP]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[GiaSP]"
+                      cachedDataType="i4"
+                      cachedName="GiaSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[GiaSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[GiaSP]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[LoaiSP]"
+                      cachedDataType="i4"
+                      cachedName="LoaiSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[LoaiSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[LoaiSP]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[NguonDuLieu]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NguonDuLieu]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[TrangThai]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[IDSanPham]"
+                      dataType="i4"
+                      name="IDSanPham" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[GiaSP]"
+                      dataType="i4"
+                      name="GiaSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[LoaiSP]"
+                      dataType="i4"
+                      name="LoaiSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[NguonDuLieu]"
+                      dataType="i4"
+                      name="NguonDuLieu" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Load SanPham from NDS"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from SanPham where (NgayTao &gt;= ? and NgayTao &lt; ?) or(NgayCapNhat &gt;= ? and NgayCapNhat &lt; ?)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{01CF0372-7ABF-4EA4-BF15-2F7BFA0A19B0};"Parameter1:Input",{97D99396-39C5-41FE-9790-54A74D0D3E4B};"Parameter2:Input",{01CF0372-7ABF-4EA4-BF15-2F7BFA0A19B0};"Parameter3:Input",{97D99396-39C5-41FE-9790-54A74D0D3E4B};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.NDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.NDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[Ma]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[Ma]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[Ma]"
+                      name="Ma"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NguonDuLieu]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]"
+                      name="NguonDuLieu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[TrangThai]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      name="TrangThai"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayTao]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]"
+                      name="NgayTao"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayCapNhat]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]"
+                      name="NgayCapNhat"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaSP]"
+                      length="4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]"
+                      name="MaSP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[TenSP]"
+                      length="50"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]"
+                      name="TenSP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[GiaSP]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[GiaSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[GiaSP]"
+                      name="GiaSP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[LoaiSP]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[LoaiSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[LoaiSP]"
+                      name="LoaiSP"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[Ma]"
+                      dataType="i4"
+                      name="Ma" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NguonDuLieu]"
+                      dataType="i4"
+                      name="NguonDuLieu" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      name="NgayTao" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      name="NgayCapNhat" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[GiaSP]"
+                      dataType="i4"
+                      name="GiaSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].ExternalColumns[LoaiSP]"
+                      dataType="i4"
+                      name="LoaiSP" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[Ma]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[Ma]"
+                      name="Ma" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[MaSP]"
+                      name="MaSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[TenSP]"
+                      name="TenSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[GiaSP]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[GiaSP]"
+                      name="GiaSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[LoaiSP]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[LoaiSP]"
+                      name="LoaiSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NguonDuLieu]"
+                      name="NguonDuLieu" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[TrangThai]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[TrangThai]"
+                      name="TrangThai" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NgayTao]"
+                      name="NgayTao" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[NgayCapNhat]"
+                      name="NgayCapNhat" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Slowly Changing Dimension"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [MaSP], [TenSP], [TrangThai] FROM [dbo].[SanPham]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere">[TrangThai] = '1'</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Connections[LookupConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[MaSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[MaSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[TenSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TenSP]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenSP" />
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union All 1"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[Ma]"
+                      cachedDataType="i4"
+                      cachedName="Ma"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[Ma]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[Ma]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NguonDuLieu]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[NgayTao]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayTao"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayTao]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[NgayCapNhat]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayCapNhat"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayCapNhat]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[MaSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[MaSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[TenSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TenSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[GiaSP]"
+                      cachedDataType="i4"
+                      cachedName="GiaSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[GiaSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[GiaSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1].Columns[LoaiSP]"
+                      cachedDataType="i4"
+                      cachedName="LoaiSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[LoaiSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[LoaiSP]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[Ma]"
+                      cachedDataType="i4"
+                      cachedName="Ma"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[Ma]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[Ma]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NguonDuLieu]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[NgayTao]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayTao"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayTao]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[NgayCapNhat]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayCapNhat"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayCapNhat]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[MaSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[MaSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[TenSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TenSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[GiaSP]"
+                      cachedDataType="i4"
+                      cachedName="GiaSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[GiaSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[GiaSP]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2].Columns[LoaiSP]"
+                      cachedDataType="i4"
+                      cachedName="LoaiSP"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[LoaiSP]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[LoaiSP]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[Ma]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[Ma]"
+                      name="Ma" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NguonDuLieu]"
+                      name="NguonDuLieu" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TrangThai]"
+                      name="TrangThai" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayTao]"
+                      name="NgayTao" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[NgayCapNhat]"
+                      name="NgayCapNhat" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[MaSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[MaSP]"
+                      name="MaSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TenSP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[TenSP]"
+                      name="TenSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[GiaSP]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[GiaSP]"
+                      name="GiaSP" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[LoaiSP]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1].Columns[LoaiSP]"
+                      name="LoaiSP" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="update old row with trangthai 0"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[SanPham] SET [TrangThai] = ? WHERE [MaSP] = ? AND [TrangThai] = '1'</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].Columns[MaSP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaSP"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]" />
+                    <inputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      externalMetadataColumnId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Derived Column Output]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Derived Column Output1]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Historical Attribute Inserts Output]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column.Inputs[Derived Column Input]"
+              name="Historical Attribute Inserts Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[New Output]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 1]"
+              name="New Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Outputs[New Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[OLE DB Command Output]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Inputs[Union All Input 2]"
+              name="OLE DB Command Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0.Outputs[OLE DB Command Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[OLE DB Source Output]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+              name="OLE DB Source Output"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Union All Output 1]"
+              endId="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1.Inputs[Derived Column Input]"
+              name="Union All Output 1"
+              startId="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Set CET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{af646115-c937-4125-a75a-3faaa0e553ab}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Set CET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D05D8780-93B9-4DB9-8911-1EB3D239D112}"
+          SQLTask:SqlStatementSource="update Data_Flow set CET = getdate() where name = 'DDS_SanPham'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SET LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1ab5007d-fb2c-426e-9139-33da79809d97}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SET LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D05D8780-93B9-4DB9-8911-1EB3D239D112}"
+          SQLTask:SqlStatementSource="update Data_Flow set LSET = CET where name='DDS_SanPham'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{aa305cd3-3935-4aea-9d8e-1250a75ece7e}"
+      DTS:From="Package\Set CET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\GET LSET" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7a626504-b158-444c-9c3b-f117cf37dbe1}"
+      DTS:From="Package\GET LSET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SanPham_NDS -&gt; SanPham_DDS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{ca95ab81-553b-4c0c-8104-d449e91aea51}"
+      DTS:From="Package\SanPham_NDS -&gt; SanPham_DDS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SET LSET" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="131.333333333334,42.6666666666667"
+          Id="Package\GET LSET"
+          TopLeft="128.124998984859,138.000001468156" />
+        <NodeLayout
+          Size="238.666666666667,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS"
+          TopLeft="73.1249998044222,216.65000292469" />
+        <NodeLayout
+          Size="120,42.6666666666667"
+          Id="Package\Set CET"
+          TopLeft="134.999998882413,60" />
+        <NodeLayout
+          Size="129.333333333334,42.6666666666667"
+          Id="Package\SET LSET"
+          TopLeft="124.374999040738,301.526320335607" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="194.395832266969,102.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3333348014894"
+              Start="0,0"
+              End="0,27.8333348014894">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8333348014894" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="193.12499939464,180.666668134823">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.9833347898673"
+              Start="0,0"
+              End="0,28.4833347898673">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.4833347898673" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="190.74999942258,259.316669591357">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.2096507442503"
+              Start="0,0"
+              End="0,34.7096507442503">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.7096507442503" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\SanPham_NDS -&gt; SanPham_DDS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension"
+          TopLeft="124.958333361273,84.766667085091" />
+        <NodeLayout
+          Size="198.666666666667,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS"
+          TopLeft="133.5,5.49999999999993" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[OLE DB Source Output]"
+          TopLeft="231.895833347303,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.6000004184245"
+              Start="0,0"
+              End="0,29.1000004184245">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.1000004184245" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column"
+          TopLeft="11.2500000931323,176.383333949347" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Historical Attribute Inserts Output]"
+          TopLeft="196.958333361273,127.433333751758">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-108.374999934807,48.9500001975894"
+              Start="0,0"
+              End="-108.374999934807,41.4500001975894">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.8000000799238" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.8000000799238"
+                    Point2="0,19.8000000799238"
+                    Point3="-4,19.8000000799238" />
+                  <mssgle:LineSegment
+                    End="-104.374999934807,19.8000000799238" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-104.374999934807,19.8000000799238"
+                    Point2="-108.374999934807,19.8000000799238"
+                    Point3="-108.374999934807,23.8000000799238" />
+                  <mssgle:LineSegment
+                    End="-108.374999934807,41.4500001975894" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-129.243886686154,24.8000000799238,150.1127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="228,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\update old row with trangthai 0"
+          TopLeft="5.50000000000004,264.100000883341" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Derived Column Output]"
+          TopLeft="88.5833334264657,219.050000616014">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.9166665735344,45.0500002673269"
+              Start="0,0"
+              End="30.9166665735344,37.5500002673269">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5250001336634" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5250001336634"
+                    Point2="0,22.5250001336634"
+                    Point3="4,22.5250001336634" />
+                  <mssgle:LineSegment
+                    End="26.9166665735344,22.5250001336634" />
+                  <mssgle:CubicBezierSegment
+                    Point1="26.9166665735344,22.5250001336634"
+                    Point2="30.9166665735344,22.5250001336634"
+                    Point3="30.9166665735344,26.5250001336634" />
+                  <mssgle:LineSegment
+                    End="30.9166665735344,37.5500002673269" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="130.666666666667,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\Union All 1"
+          TopLeft="166.875000009313,356.366667735974" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[New Output]"
+          TopLeft="264.958333361273,127.433333751758">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.3055555741821,228.933333984216"
+              Start="0,0"
+              End="-12.3055555741821,221.433333984216">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,109.81072836491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,109.81072836491"
+                    Point2="0,113.81072836491"
+                    Point3="-4,113.81072836491" />
+                  <mssgle:LineSegment
+                    End="-8.30555557418205,113.81072836491" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.30555557418205,113.81072836491"
+                    Point2="-12.3055555741821,113.81072836491"
+                    Point3="-12.3055555741821,117.81072836491" />
+                  <mssgle:LineSegment
+                    End="-12.3055555741821,221.433333984216" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-33.244164505841,118.81072836491,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[OLE DB Command Output]"
+          TopLeft="119.5,306.766667550007">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="92.2638888982021,49.6000001859665"
+              Start="0,0"
+              End="92.2638888982021,42.1000001859665">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.4000001102301" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25.4000001102301"
+                    Point2="0,29.4000001102301"
+                    Point3="4,29.4000001102301" />
+                  <mssgle:LineSegment
+                    End="88.2638888982021,29.4000001102301" />
+                  <mssgle:CubicBezierSegment
+                    Point1="88.2638888982021,29.4000001102301"
+                    Point2="92.2638888982021,29.4000001102301"
+                    Point3="92.2638888982021,33.4000001102301" />
+                  <mssgle:LineSegment
+                    End="92.2638888982021,42.1000001859665" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\Derived Column 1"
+          TopLeft="143.333333445092,437.583334786196" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Union All Output 1]"
+          TopLeft="228.770833393869,399.03333440264">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.550000383556"
+              Start="0,0"
+              End="0,31.050000383556">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.050000383556" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="228,42.6666666666667"
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1"
+          TopLeft="120.208333789681,516.850001871288" />
+        <EdgeLayout
+          Id="Package\SanPham_NDS -&gt; SanPham_DDS.Paths[Derived Column Output1]"
+          TopLeft="225.333333445092,480.250001452863">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8.87500034458938,36.6000004184247"
+              Start="0,0"
+              End="8.87500034458938,29.1000004184247">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.3000002092124" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.3000002092124"
+                    Point2="0,18.3000002092124"
+                    Point3="4,18.3000002092124" />
+                  <mssgle:LineSegment
+                    End="4.87500034458938,18.3000002092124" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.87500034458938,18.3000002092124"
+                    Point2="8.87500034458938,18.3000002092124"
+                    Point3="8.87500034458938,22.3000002092124" />
+                  <mssgle:LineSegment
+                    End="8.87500034458938,29.1000004184247" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\SanPham_NDS -&gt; SanPham_DDS\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{8E487C37-D6DD-4C06-932A-0BC06710D513}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[SanPham]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[GiaSP]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;GiaSP&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[LoaiSP]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;LoaiSP&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[MaSP]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;MaSP&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;NguonDuLieu&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TenSP]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;TenSP&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load SanPham from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;TrangThai&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Derived Column&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Union All 1&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Derived Column 1&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;true&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn&gt;TrangThai&lt;/CurrentIndicatorColumn&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent&gt;1&lt;/ValueCurrent&gt;
+  &lt;ValueExpired&gt;0&lt;/ValueExpired&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SanPham_NDS -&gt; SanPham_DDS\Load SanPham from NDS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\SanPham_NDS -&gt; SanPham_DDS\insert new row with trangthai 1">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

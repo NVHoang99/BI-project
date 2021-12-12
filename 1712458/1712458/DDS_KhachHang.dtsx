@@ -1,0 +1,2164 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/22/2021 6:43:49 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADMIN"
+  DTS:CreatorName="ADMIN\Admin"
+  DTS:DTSID="{8D98EC18-A4EB-49D2-81EA-9FFE25366257}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.170"
+  DTS:LocaleID="1066"
+  DTS:ObjectName="DDS_KhachHang"
+  DTS:PackageType="5"
+  DTS:VersionBuild="7"
+  DTS:VersionGUID="{16D3D5FE-3938-4CBD-92C6-FEB49966EC29}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DDS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{DE97326E-E603-4602-9547-8A5346AEE024}"
+      DTS:ObjectName="LocalHost.DDS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.Metadata]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D71F3FF3-E5FB-4729-9470-0BE8B763C9E4}"
+      DTS:ObjectName="LocalHost.Metadata">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=Metadata;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.NDS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{031DA4B1-0275-4865-911B-9A0A2AC83142}"
+      DTS:ObjectName="LocalHost.NDS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=NDS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CF4A3AE2-E880-460A-A328-2AFFF2CA528E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CET_Result">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9003C77F-34A3-4FE5-B1C4-92EC30247D50}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="LSET_result">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/1900</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\GET LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B6F9B22-076E-4EE6-9169-68A86335C727}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="GET LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D71F3FF3-E5FB-4729-9470-0BE8B763C9E4}"
+          SQLTask:SqlStatementSource="select LSET, CET from Data_Flow where name = 'DDS_KhachHang'"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LSET"
+            SQLTask:DtsVariableName="User::LSET_result" />
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="CET"
+            SQLTask:DtsVariableName="User::CET_Result" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\KhachHang_NDS -&gt; KhachHang_DDS"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7ACE4378-AD65-460C-884F-976FA66C155B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="KhachHang_NDS -&gt; KhachHang_DDS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="column TrangThai with value 0"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Inputs[Derived Column Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)("0")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)("0")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="column TrangThai with value 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Inputs[Derived Column Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_I4)("1")</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_I4)("1")</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert KhachHang"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[KhachHang]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[MaKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaKH"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[MaKH]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaKH]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[TenKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenKH"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[TenKH]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TenKH]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[DiaChi]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DiaChi"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[DiaChi]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[DiaChi]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[MaNuoc]"
+                      cachedDataType="i4"
+                      cachedName="MaNuoc"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[MaNuoc]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaNuoc]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[NguonDuLieu]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NguonDuLieu]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[TrangThai]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[GioiTinh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="GioiTinh"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[GioiTinh]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[GioiTinh]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[NgheNghiep]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="NgheNghiep"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[NgheNghiep]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgheNghiep]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].Columns[SoThich]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="SoThich"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[SoThich]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[SoThich]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[IDKhachHang]"
+                      dataType="i4"
+                      name="IDKhachHang" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DiaChi" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[MaNuoc]"
+                      dataType="i4"
+                      name="MaNuoc" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[NguonDuLieu]"
+                      dataType="i4"
+                      name="NguonDuLieu" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="GioiTinh" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="NgheNghiep" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input].ExternalColumns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="SoThich" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Load KhachHang from NDS"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from KhachHang where (NgayTao &gt;= ? and NgayTao &lt; ?) or (NgayCapNhat &gt;= ? and NgayCapNhat &lt; ?)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{9003C77F-34A3-4FE5-B1C4-92EC30247D50};"Parameter1:Input",{CF4A3AE2-E880-460A-A328-2AFFF2CA528E};"Parameter2:Input",{9003C77F-34A3-4FE5-B1C4-92EC30247D50};"Parameter3:Input",{CF4A3AE2-E880-460A-A328-2AFFF2CA528E};</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.NDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.NDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[Ma]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[Ma]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[Ma]"
+                      name="Ma"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaKH]"
+                      length="4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]"
+                      name="MaKH"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[TenKH]"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]"
+                      name="TenKH"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[DiaChi]"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]"
+                      name="DiaChi"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaNuoc]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaNuoc]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaNuoc]"
+                      name="MaNuoc"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NguonDuLieu]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]"
+                      name="NguonDuLieu"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[TrangThai]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]"
+                      name="TrangThai"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[GioiTinh]"
+                      length="1"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]"
+                      name="GioiTinh"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgheNghiep]"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]"
+                      name="NgheNghiep"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[SoThich]"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]"
+                      name="SoThich"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayTao]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]"
+                      name="NgayTao"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayCapNhat]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]"
+                      name="NgayCapNhat"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[Ma]"
+                      dataType="i4"
+                      name="Ma" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DiaChi" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[MaNuoc]"
+                      dataType="i4"
+                      name="MaNuoc" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NguonDuLieu]"
+                      dataType="i4"
+                      name="NguonDuLieu" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="GioiTinh" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="NgheNghiep" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="SoThich" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      name="NgayTao" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].ExternalColumns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      name="NgayCapNhat" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[Ma]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[Ma]"
+                      name="Ma" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[MaKH]"
+                      name="MaKH" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[TenKH]"
+                      name="TenKH" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[DiaChi]"
+                      name="DiaChi" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[MaNuoc]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[MaNuoc]"
+                      name="MaNuoc" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NguonDuLieu]"
+                      name="NguonDuLieu" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[TrangThai]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[TrangThai]"
+                      name="TrangThai" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[GioiTinh]"
+                      name="GioiTinh" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgheNghiep]"
+                      name="NgheNghiep" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[SoThich]"
+                      name="SoThich" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgayTao]"
+                      name="NgayTao" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[NgayCapNhat]"
+                      name="NgayCapNhat" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Slowly Changing Dimension"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DiaChi], [GioiTinh], [MaKH], [NgheNghiep], [SoThich], [TenKH], [TrangThai] FROM [dbo].[KhachHang]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere">[TrangThai] = '1'</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1258</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Connections[LookupConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[DiaChi]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DiaChi"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[DiaChi]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[GioiTinh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="GioiTinh"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[GioiTinh]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[MaKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaKH"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[MaKH]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[NgheNghiep]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="NgheNghiep"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[NgheNghiep]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[SoThich]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="SoThich"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[SoThich]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].Columns[TenKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenKH"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TenKH]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          name="ColumnType"
+                          typeConverter="ColumnType">3</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="DiaChi" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="GioiTinh" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="MaKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="NgheNghiep" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="SoThich" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TenKH" />
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input].ExternalColumns[TrangThai]"
+                      dataType="i4"
+                      name="TrangThai" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union All"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[Ma]"
+                      cachedDataType="i4"
+                      cachedName="Ma"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[Ma]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[Ma]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[MaKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaKH"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaKH]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[TenKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenKH"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TenKH]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[DiaChi]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DiaChi"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[DiaChi]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[MaNuoc]"
+                      cachedDataType="i4"
+                      cachedName="MaNuoc"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaNuoc]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaNuoc]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NguonDuLieu]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[GioiTinh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="GioiTinh"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[GioiTinh]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[NgheNghiep]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="NgheNghiep"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgheNghiep]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[SoThich]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="SoThich"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[SoThich]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[NgayTao]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayTao"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayTao]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1].Columns[NgayCapNhat]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayCapNhat"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayCapNhat]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[Ma]"
+                      cachedDataType="i4"
+                      cachedName="Ma"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[Ma]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[Ma]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[MaKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaKH"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaKH]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[TenKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="TenKH"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TenKH]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[DiaChi]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="DiaChi"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[DiaChi]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[MaNuoc]"
+                      cachedDataType="i4"
+                      cachedName="MaNuoc"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaNuoc]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaNuoc]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[NguonDuLieu]"
+                      cachedDataType="i4"
+                      cachedName="NguonDuLieu"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NguonDuLieu]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[GioiTinh]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="GioiTinh"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[GioiTinh]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[NgheNghiep]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="NgheNghiep"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgheNghiep]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[SoThich]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="SoThich"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[SoThich]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[NgayTao]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayTao"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayTao]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayTao]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2].Columns[NgayCapNhat]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="NgayCapNhat"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgayCapNhat]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayCapNhat]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[Ma]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[Ma]"
+                      name="Ma" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaKH]"
+                      name="MaKH" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TenKH]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TenKH]"
+                      name="TenKH" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[DiaChi]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[DiaChi]"
+                      name="DiaChi" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaNuoc]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[MaNuoc]"
+                      name="MaNuoc" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NguonDuLieu]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NguonDuLieu]"
+                      name="NguonDuLieu" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[TrangThai]"
+                      name="TrangThai" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[GioiTinh]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[GioiTinh]"
+                      name="GioiTinh" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgheNghiep]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgheNghiep]"
+                      name="NgheNghiep" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[SoThich]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[SoThich]"
+                      name="SoThich" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayTao]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayTao]"
+                      name="NgayTao" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayCapNhat]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1].Columns[NgayCapNhat]"
+                      name="NgayCapNhat" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="Update old row"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE [dbo].[KhachHang] SET [TrangThai] = ? WHERE [MaKH] = ? AND [TrangThai] = '1'</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DDS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DDS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].Columns[MaKH]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="MaKH"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]" />
+                    <inputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].Columns[TrangThai]"
+                      cachedDataType="i4"
+                      cachedName="TrangThai"
+                      externalMetadataColumnId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Derived Column Output]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Derived Column Output1]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Historical Attribute Inserts Output]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0.Inputs[Derived Column Input]"
+              name="Historical Attribute Inserts Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[New Output]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 1]"
+              name="New Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Outputs[New Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[OLE DB Command Output]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Inputs[Union All Input 2]"
+              name="OLE DB Command Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row.Outputs[OLE DB Command Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[OLE DB Source Output]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+              name="OLE DB Source Output"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Union All Output 1]"
+              endId="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1.Inputs[Derived Column Input]"
+              name="Union All Output 1"
+              startId="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Set CET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{599CBD1C-0DDE-4925-A86B-06E51C382132}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Set CET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D71F3FF3-E5FB-4729-9470-0BE8B763C9E4}"
+          SQLTask:SqlStatementSource="update Data_Flow set CET = getdate() where name = 'DDS_KhachHang'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SET LSET"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{CBC30653-AF80-4762-987B-C58E78F3D4FF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SET LSET"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D71F3FF3-E5FB-4729-9470-0BE8B763C9E4}"
+          SQLTask:SqlStatementSource="update Data_Flow set LSET = CET where name='DDS_KhachHang'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::CET_Result"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="135"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8FDE3808-1A84-482F-A282-8C44562B1458}"
+      DTS:From="Package\Set CET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\GET LSET" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8D8B1FEE-17C3-4451-8AAA-A092880BD376}"
+      DTS:From="Package\GET LSET"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\KhachHang_NDS -&gt; KhachHang_DDS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{0F4958A5-610C-4D84-851B-71BAFE262793}"
+      DTS:From="Package\KhachHang_NDS -&gt; KhachHang_DDS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SET LSET" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="131.333333333334,42.6666666666667"
+          Id="Package\GET LSET"
+          TopLeft="164.374997550622,114.263160045457" />
+        <NodeLayout
+          Size="264,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS"
+          TopLeft="96.2499985657633,192.263161513614" />
+        <NodeLayout
+          Size="120,42.6666666666667"
+          Id="Package\Set CET"
+          TopLeft="171.249997448176,36.2631585773009" />
+        <NodeLayout
+          Size="129.333333333334,42.6666666666667"
+          Id="Package\SET LSET"
+          TopLeft="160.624997606501,277.789478912908" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="230.645830832732,78.9298252439676">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3333348014894"
+              Start="0,0"
+              End="0,27.8333348014894">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8333348014894" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="229.145831391526,156.929826712124">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.3333348014903"
+              Start="0,0"
+              End="0,27.8333348014903">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.8333348014903" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="226.770831419466,234.929828180281">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.8596507326278"
+              Start="0,0"
+              End="0,35.3596507326278">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.3596507326278" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\KhachHang_NDS -&gt; KhachHang_DDS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension"
+          TopLeft="132.083333314707,71.9035080893651" />
+        <NodeLayout
+          Size="225.333333333334,42"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 1"
+          TopLeft="129.166667039196,360.096488240242" />
+        <NodeLayout
+          Size="122.666666666667,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\Union All"
+          TopLeft="174.250000018626,289.587716915711" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS"
+          TopLeft="130.833333333333,5.49999999999993" />
+        <NodeLayout
+          Size="165.333333333334,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\Insert KhachHang"
+          TopLeft="152.375000046566,425.815785790414" />
+        <NodeLayout
+          Size="225.333333333334,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\column TrangThai with value 0"
+          TopLeft="19.8333333333333,159.517542893756" />
+        <NodeLayout
+          Size="150.666666666667,42.6666666666667"
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS\Update old row"
+          TopLeft="61.1249991711229,225.921050983123" />
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Union All Output 1]"
+          TopLeft="238.708333528911,332.254383582378">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.8421046578645"
+              Start="0,0"
+              End="0,20.3421046578645">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3421046578645" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[OLE DB Source Output]"
+          TopLeft="237.45833332402,48.1666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23.7368414226985"
+              Start="0,0"
+              End="0,16.2368414226985">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2368414226985" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[OLE DB Command Output]"
+          TopLeft="211.79166583779,247.254384316456">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="4.68055640305914,42.3333325992554"
+              Start="0,0"
+              End="4.68055640305914,34.8333325992554">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0.680556403059143,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0.680556403059143,0"
+                    Point2="4.68055640305914,0"
+                    Point3="4.68055640305914,4" />
+                  <mssgle:LineSegment
+                    End="4.68055640305914,34.8333325992554" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[New Output]"
+          TopLeft="272.083333314707,114.570174756032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-17.3888888516357,175.01754215968"
+              Start="0,0"
+              End="-17.3888888516357,167.51754215968">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.9226381534828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,82.9226381534828"
+                    Point2="0,86.9226381534828"
+                    Point3="-4,86.9226381534828" />
+                  <mssgle:LineSegment
+                    End="-13.3888888516357,86.9226381534828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-13.3888888516357,86.9226381534828"
+                    Point2="-17.3888888516357,86.9226381534828"
+                    Point3="-17.3888888516357,90.9226381534828" />
+                  <mssgle:LineSegment
+                    End="-17.3888888516357,167.51754215968" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-35.7858311445678,91.9226381534828,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Historical Attribute Inserts Output]"
+          TopLeft="204.083333314707,114.570174756032">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-71.5833333147066,44.9473681377245"
+              Start="0,0"
+              End="-71.5833333147066,37.4473681377245">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.1809578984054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.1809578984054"
+                    Point2="0,18.1809578984054"
+                    Point3="-4,18.1809578984054" />
+                  <mssgle:LineSegment
+                    End="-67.5833333147066,18.1809578984054" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-67.5833333147066,18.1809578984054"
+                    Point2="-71.5833333147066,18.1809578984054"
+                    Point3="-71.5833333147066,22.1809578984054" />
+                  <mssgle:LineSegment
+                    End="-71.5833333147066,37.4473681377245" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-110.848053376103,23.1809578984054,150.1127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Derived Column Output1]"
+          TopLeft="238.437500209548,402.096488240242">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23.7192975501716"
+              Start="0,0"
+              End="0,16.2192975501716">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2192975501716" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\KhachHang_NDS -&gt; KhachHang_DDS.Paths[Derived Column Output]"
+          TopLeft="134.479166252228,202.184209560423">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23.7368414226996"
+              Start="0,0"
+              End="0,16.2368414226996">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2368414226996" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\KhachHang_NDS -&gt; KhachHang_DDS\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionID&gt;{DE97326E-E603-4602-9547-8A5346AEE024}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[KhachHang]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[DiaChi]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;DiaChi&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[GioiTinh]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;GioiTinh&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaKH]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;MaKH&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[MaNuoc]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;MaNuoc&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NgheNghiep]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;NgheNghiep&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[NguonDuLieu]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;NguonDuLieu&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[SoThich]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;SoThich&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TenKH]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;TenKH&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;HistoricalAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;Load KhachHang from NDS.Outputs[OLE DB Source Output].Columns[TrangThai]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;TrangThai&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Derived Column&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Union All&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Derived Column 1&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;true&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn&gt;TrangThai&lt;/CurrentIndicatorColumn&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent&gt;1&lt;/ValueCurrent&gt;
+  &lt;ValueExpired&gt;0&lt;/ValueExpired&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;false&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\KhachHang_NDS -&gt; KhachHang_DDS\Load KhachHang from NDS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
